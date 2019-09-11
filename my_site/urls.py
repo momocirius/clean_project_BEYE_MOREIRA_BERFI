@@ -25,7 +25,7 @@ page_needing_js, show_image, faq, skeleton, using_skeleton
 urlpatterns = [
     #Chemin entre l'URL et la vue.
     path('admin/', admin.site.urls),
-    path('', home_page_view, name='home'),
+    path('log', home_page_view, name='home'),
     path('home/', home_page_view_with_render, name="home_render"),
     path('form/', form, name='form'),
     path('page_needing_js/', view=page_needing_js),
@@ -33,5 +33,5 @@ urlpatterns = [
     path('faq/<int:question_int>/', faq),
     path('using_skeleton/', using_skeleton),
     path('skeleton/', skeleton),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('', auth_views.LoginView.as_view(), name='login'),
 ]
