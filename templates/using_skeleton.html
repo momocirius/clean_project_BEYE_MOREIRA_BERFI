@@ -1,0 +1,21 @@
+<!-- extend html code from skeleton.html
+(comme un copié collé sauf pour les blocs title et content) -->
+{% extends "skeleton.html" %}
+
+<!-- In the skeleton, the block title is not empty, we re-write it -->
+{% block title %} <title>Un squelette - Django </title> {% endblock %}
+
+<!-- In the skeleton, the block info is empty, we re-write it -->
+{% block info %}<h1>My Django Site - usage du squelette</h1>{% endblock %}
+
+<!-- In the skeleton, the block content is empty, we write it -->
+{% block content %}
+    <div class="container" id="global_container">
+       <div class="jumbotron text-center" id="jumbotron_first_size" style="margin-top:30px">
+         <ul>
+         {% for code, color in rgb.items %}
+             <p style="color: #{{ code }};">{{ color }}</p>
+         {% endfor %}
+         </ul>
+       </div>
+{% endblock %}

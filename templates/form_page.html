@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Form - Django</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class="jumbotron text-center" style="margin-bottom:0">
+         <h1>My Django Site</h1>
+         <p>IPSSI</p>
+      </div>
+      <div class="container" id="global_container">
+         <div class="jumbotron text-center" id="jumbotron_first_size" style="margin-top:30px">
+            <h1>Les données !! </h1>
+            <p> Dernières données reçues :</p>
+            <p>{{ value_1 }} </p>
+            <form action="" method="post">
+               {% csrf_token %}
+               <input id="your_name" type="text" name="data">
+               <input type="submit" value="OK">
+            </form>
+            <p class="tagline">Juste au dessus !</p>
+         </div>
+         <div class="jumbotron text-center" style="margin-bottom:0">
+            <p>Footer</p>
+         </div>
+      </div>
+   </body>
+</html>
