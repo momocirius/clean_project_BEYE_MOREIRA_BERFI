@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from .views import home_page_view, home_page_view_with_render, form, \
-page_needing_js, show_image, faq, skeleton, using_skeleton
+page_needing_js, show_image, profile, skeleton, using_skeleton
 
 
 urlpatterns = [
@@ -27,11 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('log', home_page_view, name='home'),
     path('home/', home_page_view_with_render, name="home_render"),
-    path('form/', form, name='form'),
-    path('page_needing_js/', view=page_needing_js),
-    path('show_image/', view=show_image),
-    path('faq/<int:question_int>/', faq),
-    path('using_skeleton/', using_skeleton),
-    path('skeleton/', skeleton),
+    path('profile/<int:question_int>/', profile),
     path('', auth_views.LoginView.as_view(), name='login'),
 ]

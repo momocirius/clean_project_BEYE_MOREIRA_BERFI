@@ -1,8 +1,8 @@
-#my_site/views.py
+# my_site/views.py
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.models import User
 import datetime
-
 
 from .logic_for_views import get_graph_data, store_question, db
 
@@ -22,7 +22,7 @@ def home_page_view_with_render(request):
     La navbar est générée en partie à l'aide de la variable sections
 
     """
-    return render(request, "home_page.html",{"sections": [{"title":"Home", "href":"/home"}]})
+    return render(request, "home_page.html", {"sections": [{"title": "Home", "href": "/home"}]})
 
 
 def form(request):
@@ -38,7 +38,7 @@ def form(request):
         now = datetime.datetime.now()
         alpha = "Il est {hour}h{minute}, et nous n'avons rien à vous montrer".format(hour=now.hour,
                                                                                      minute=now.minute)
-    return render(request, "form_page.html",{"value_1":alpha})
+    return render(request, "form_page.html", {"value_1": alpha})
 
 
 def show_image(request):
@@ -61,29 +61,44 @@ def page_needing_js(request):
         # Affichage
         print("alpha : {}, \nbeta : {}, \ngamma : {}".format(alpha, beta, gamma))
         ## do_something()
-    return render(request, 'page_needing_js.html', {"sections": [{"title":"Home",
-                                                                  "href":"/home"}]})
+    return render(request, 'page_needing_js.html', {"sections": [{"title": "Home",
+                                                                  "href": "/home"}]})
 
 
-def faq(request, question_int):
+def createUser(name, email, password):
+    """
+    this function is to create new user
+
+    :param name: name
+    :param email:
+    :param password:
+    :return: boolean
+    """
+    try:
+        User.objects.create_user(username=name,
+                                 email=email,
+                                 password=password)
+    except:
+        return False
+    return True
+
+
+def profile(request, question_int):
     """
     Une vue qui permet d'afficher le template faq (attention l'url est 'faq/<int:question_int>/'.
     On en registre la question (son text) et cet entier question_int dans une base MongoDB
     (seulement si la question finit par "?").
+
+    pour tout les utilisateurs avec un id impair ils n'ont pas droit au profil
     """
-    print("question_int : ", question_int)
-    # Si une question a été envoyée
-    if request.method == "POST":
-        question_text = request.POST["question_text"]
-        print("question :", question_text)
-        # On vérifie qu'elle termine par : ?
-        if question_text[-1] != "?":
-            # Si ce n'est pas le cas on renvoie un message expliquant qu'elle n'est pas valide
-            return render(request, "faq.html", {'message': "Une question doit finir par ce caractère : ? "})
-        # Sinon on renvoie un message indiquant de poser une autre question
-        else:
-            store_question(question_text=question_text, question_int=question_int, db=db, collection='from_app')
-            return render(request, "faq.html", {'message': "Posez une autre question."})
+
+    # # Si id = 1
+    if request.user.is_authenticated and request.user.id % 2:
+        print("id user " + str(request.user.id))
+        return render(request, "faq.html")
+
+    else:
+        return render(request, "home_page.html")
     return render(request, "faq.html")
 
 
@@ -100,8 +115,8 @@ def using_skeleton(request):
     n'est pas rigoureusement identique.
     """
     rgb = {
-        'FF0000':'red',
-        '00FF00':'green',
-        '0000FF':'blue'
-        }
+        'FF0000': 'red',
+        '00FF00': 'green',
+        '0000FF': 'blue'
+    }
     return render(request, "using_skeleton.html", {'rgb': rgb})

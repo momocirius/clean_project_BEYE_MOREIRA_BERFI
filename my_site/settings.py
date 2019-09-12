@@ -139,4 +139,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL =  '/show_image'
+LOGIN_REDIRECT_URL =  '/profile/1'
